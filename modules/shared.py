@@ -13,7 +13,7 @@ history = {'internal': [], 'visible': []}
 character = 'None'
 stop_everything = False
 processing_message = '*Is typing...*'
-
+is_generating_text = False
 # UI elements (buttons, sliders, HTML, etc)
 gradio = {}
 

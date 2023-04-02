@@ -295,6 +295,13 @@ def create_interface():
             with gr.Tab("Text generation", elem_id="main"):
                 if shared.args.cai_chat:
                     shared.gradio['display'] = gr.HTML(value=generate_chat_html(shared.history['visible'], shared.settings['name1'], shared.settings['name2'], shared.character))
+
+                    # This wrapper is necessary to make the "every" attribute work
+                    def refresh_html_chat():
+                        return generate_chat_html(shared.history['visible'], shared.settings['name1'], shared.settings['name2'], shared.character)
+
+                    # This causes the refresh_html_chat function to run ever 2 seconds.
+                    shared.gradio['refresh_chat'] = shared.gradio['interface'].load(refresh_html_chat, [], None if shared.is_generating_text else shared.gradio['display'], every=2)
                 else:
                     shared.gradio['display'] = gr.Chatbot(value=shared.history['visible'], elem_id="gradio-chatbot")
                 shared.gradio['textbox'] = gr.Textbox(label='Input')

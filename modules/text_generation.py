@@ -106,6 +106,7 @@ def generate_reply(question, max_new_tokens, do_sample, temperature, top_p, typi
     clear_torch_cache()
     set_manual_seed(seed)
     shared.stop_everything = False
+    shared.is_generating_text = True
     t0 = time.time()
 
     original_question = question
@@ -277,4 +278,5 @@ def generate_reply(question, max_new_tokens, do_sample, temperature, top_p, typi
         original_tokens = len(original_input_ids[0])
         new_tokens = len(output)-original_tokens
         print(f"Output generated in {(t1-t0):.2f} seconds ({new_tokens/(t1-t0):.2f} tokens/s, {new_tokens} tokens, context {original_tokens})")
+        shared.is_generating_text = False
         return
